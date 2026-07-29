@@ -1,0 +1,1 @@
+from dna_function import count_nucleotide, GC_content
