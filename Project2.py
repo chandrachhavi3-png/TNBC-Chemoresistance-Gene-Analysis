@@ -40,17 +40,18 @@ df["G"] = df["Nucleotides"].apply(lambda x : x["G"])
 df["C"] = df["Nucleotides"].apply(lambda x : x["C"])
 
 print(df)
-print(df.columns)
 print(df["group"].value_counts())
 
 baseline_mean = df[df["group"]=="baseline"]["GC_%"].mean()
 baseline_std = df[df["group"]=="baseline"]["GC_%"].std()
 baseline_min = df[df["group"]=="baseline"]["GC_%"].min()
 baseline_max = df[df["group"]=="baseline"]["GC_%"].max()
+
 print("baseline_mean : ",baseline_mean)
 print("baseline_std : ",baseline_std)
 print("baseline_min : ",baseline_min)
 print("baseline_max : ",baseline_max)
 
 gene_GC = df[df["group"]=="TNBC"]["GC_%"]
-print((gene_GC - baseline_mean)/baseline_std)
+z_score = ((gene_GC - baseline_mean)/baseline_std)
+print(z_score)
