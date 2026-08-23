@@ -55,3 +55,30 @@ print("baseline_max : ",baseline_max)
 gene_GC = df[df["group"]=="TNBC"]["GC_%"]
 z_score = ((gene_GC - baseline_mean)/baseline_std)
 print(z_score)
+
+import matplotlib.pyplot as plt
+from matplotlib.patches import Patch
+
+x = df["GC_%"]
+y = df["Gene"]
+
+Group = df["group"]
+Colors = []
+for data in Group:
+    if data == "TNBC":
+        color = "firebrick"
+    else:
+        color = "steelblue"  
+    Colors.append(color)
+
+plt.barh(y,x, color=Colors)
+plt.xlabel("GC Content%")
+plt.ylabel("Gene Name")
+plt.title("GC_content comparison between TNBC and Baseline genes")
+TNBC_patch = Patch(color="firebrick", label="TNBC")
+Baseline_patch = Patch(color="steelblue", label="Baseline")
+plt.legend(handles=[TNBC_patch,Baseline_patch],bbox_to_anchor=(1.01, 1), loc="upper left")
+plt.axvspan(baseline_mean - baseline_std, baseline_mean + baseline_std, alpha=0.2, color="green")
+plt.text(baseline_mean, 19.7, "±1 SD from baseline mean", ha="center", fontsize=9)
+plt.savefig("gc_content_comparison.png", dpi=300, bbox_inches="tight")
+plt.show()
